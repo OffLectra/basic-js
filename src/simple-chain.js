@@ -4,26 +4,61 @@ const { NotImplementedError } = require('../extensions/index.js');
  * Implement chainMaker object according to task description
  * 
  */
+// const chainMaker = {
+//   getLength() {
+//     throw new NotImplementedError('Not implemented');
+//     // remove line with error and write your code here
+//   },
+//   addLink(/* value */) {
+//     throw new NotImplementedError('Not implemented');
+//     // remove line with error and write your code here
+//   },
+//   removeLink(/* position */) {
+//     throw new NotImplementedError('Not implemented');
+//     // remove line with error and write your code here
+//   },
+//   reverseChain() {
+//     throw new NotImplementedError('Not implemented');
+//     // remove line with error and write your code here
+//   },
+//   finishChain() {
+//     throw new NotImplementedError('Not implemented');
+//     // remove line with error and write your code here
+//   }
+// };
+
 const chainMaker = {
+  chains: [],
+
   getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.chains.length
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addLink(value) {
+    this.chains = this.chains.concat(value)
+    return this
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeLink(position) {
+    if(typeof position != 'number' || position > this.chains.length || position < 1) {
+      this.chains = []
+      throw new Error("You can't remove incorrect link!")
+    }
+    position--
+    this.chains = this.chains.filter((it, i) => i != position)
+    return this
   },
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    let newArr = []
+    if(this.chains.length == 0) return this
+    for(i = this.chains.length - 1; i >= 0; i--){
+      newArr = newArr.concat(this.chains[i])
+    }
+    this.chains = newArr;
+    return this
   },
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    let chainsReady = this.chains
+    this.chains = []
+    return chainsReady.map((it, i) => `( ${it} )`).join('~~')
   }
 };
 
